@@ -1,0 +1,53 @@
+# Configuracion de bash by: johan alarcon xd
+
+# IMPORTANTE!!!    
+# Asegurense de tener los archivos donde deben de estar, estas rutas son en base a la configuracion promedio, mas no universal
+# Asegurense de poner el nombre exacto de su archivo .txt de la waifu
+# Asegurense de tener instalado Fastfetch
+
+
+
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+PS1='[\u@\h \W]\$ '
+
+
+# --- Terminal Estilo Waifu xd ---
+clear
+
+# 1. Definimos la paleta de colores (ANSI)
+CYAN=$'\e[1;36m'    # Celeste brillante para la Waifu
+MAGENTA=$'\e[1;35m' # Magenta para las etiquetas (OS, Host...)
+WHITE=$'\e[1;37m'   # Blanco brillante para la info
+NC=$'\e[0m'         # Reset
+
+# 2. Info de fastfetch 
+# aquí tomamos la informacion del equipo usando fasfetch y lo pegamos en un archivo llamado sysinfo.txt
+# (editen las rutas dependiendo como tengan organizados sus archivos)
+fastfetch -l none -c ~/.config/fastfetch/config.jsonc > /tmp/sysinfo.txt
+
+# 3. La waifu que usarémos en la rerminal:
+# Basicamente aqui hacemos lo mismo que con el fast fetch, tomamos la waifu el archivo.txt donde la tengamos guardada
+# Posteriormente la pegamos con la configuracion de color en otro (en la parte que dice CYAN pueden editarle el color)
+# Pintamos la Waifu de Cian línea por línea
+sed "s|^|${CYAN}|;s|$|${NC}|" ~/ascii/waifu5.txt > /tmp/waifu_color.txt
+
+# Pintamos las etiquetas de Magenta y la info de Blanco
+# Buscamos texto hasta el ':' y le inyectamos los códigos
+sed "s|^\([^:]*:\)|${MAGENTA}\1${WHITE}|;s|$|${NC}|" /tmp/sysinfo.txt > /tmp/sysinfo_color.txt
+
+# 4. ENSAMBLAJE FINAL (Lado a lado)
+# basicamente primero imprimimos el ascii de la waifu ya con la configuracion de color y luego la info que tomamos del fastfetch
+paste -d'    ' /tmp/waifu_color.txt /tmp/sysinfo_color.txt
+
+# 5. Mantenimiento de temporales 
+rm /tmp/sysinfo.txt /tmp/waifu_color.txt /tmp/sysinfo_color.txt
+tput sgr0
+echo ""
