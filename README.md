@@ -5,7 +5,6 @@ Este es el "rice" de mi Arch Linux
 
 ## Especificaciones del Sistema
 - **OS:** Arch Linux x86_64
-- **Host:** Lenovo G480
 - **DE:** XFCE 4.18
 - **WM:** Xfwm4
 - **Compositor:** Picom (XRender backend)
